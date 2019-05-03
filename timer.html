@@ -1,0 +1,104 @@
+<HTML>
+<head>
+	<title>
+		Timer
+	</title>
+
+<style type="text/css">
+		.disp{
+			color:purple;background:#ffe6ff;border-radius:10px;padding: 20px;width:20%;height:auto;
+		}
+
+
+	</style>
+
+</head>
+
+<BODY>
+
+
+	<form name ="frm">
+		<input type="date" name="date" id="date" style="background:#ffffff;color:#660066;text-align:center;border-radius:5px;border:1px solid #1a001a; width:200px;height:50px;">
+		<input type="time" name="time" id="time" style="background:#000000;color:#e6e6e6;text-align:center;border-radius:5px;border:1px solid #1a001a; width:200px;height:50px;"><br><br>
+		<input type="button" value ="Start Timer" name="btn" onclick="setValues()" style="background:blue;color:white;border-radius:5px;border:none; width:200px;height:50px;">
+		
+	</form>
+<hr color=#000033>
+
+
+<script type="text/javascript">
+	var date, year,month,day,time,hour,min;
+	var today = new Date();
+	var tyear=today.getFullYear();
+	var tmonth=today.getMonth()+1;
+	var tdate=today.getDate();
+	var thour=today.getHours();
+	var tmin=today.getMinutes();
+		function setValues(){
+			date=document.getElementById('date').value;
+			
+			year=parseInt(date.substring(0,4));
+			year=year-tyear;
+			month=parseInt(date.substring(5,7));
+			month=month-tmonth;
+			day=parseInt(date.substring(8,10));
+			day=day-tdate;
+			time=document.getElementById('time').value;
+			
+			hour=parseInt(time.substring(0,2));
+			hour=hour-thour;
+			min=parseInt(time.substring(3,5));
+			min=min-tmin;
+			var intervalDisp=setInterval(startTimer,1000);
+		}
+	function startTimer(){
+		--min;
+		if(min<=0){
+				if(day>0){
+					--hour;
+					min=59;
+				}else min=0;
+		}
+		if(hour<=0){
+			if(day>0){
+				--day;
+				hour=23;
+			}else day=0;
+		}
+		if(day<=0){
+			if(month>0){
+				--month;
+				day=30;
+			}else day=0;
+		}
+		if(month<=0){
+			if(year>0){
+				--year;
+				month=12;
+			}else month=0;
+
+		}
+		if(year<=0&&month<=0&&date<=0&&hour<=0&&min<=0){
+			clearInterval(intervalDisp);
+		}
+		var disp=min.toString()+" : "+hour.toString()+" : "+day.toString()+" : "+month.toString()+" : "+year.toString();
+		var tod=today.getFullYear()+" "+(today.getMonth()+1)+" "+today.getDate()+" "+today.getHours()+" "+today.getMinutes()+" "+today.getSeconds();
+		document.getElementById("show_time").innerHTML=disp;//+"<br>"+tod;
+		document.getElementById("show_time").display='block';
+		
+		//return disp;	
+
+	}
+
+
+</script>
+
+<div class="disp" >
+	Minutes : Hours : Days : Months : Years
+	<div id="show_time" >
+	</div>
+</div>
+</BODY>
+
+
+</HTML>
